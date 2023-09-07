@@ -7,24 +7,32 @@ import { cn } from "@/lib/utils"
 import { ProductFilters } from "@/components/product-filters"
 import { ProductGrid } from "@/components/product-grid"
 import { ProductSort } from "@/components/product-sort"
-import { seedSanityData } from "@/lib/seed"
-import { product } from './../sanity/schemas/product-schema';
+
 
 interface Props {
   searchParams:{
     date?: string
     price?: string
+    color?: string
+    category?: string
+    size?: string
   }
 }
 
 export default async function Page({searchParams}: Props) {
-  const {date, price} = searchParams
-  const priceOrder = searchParams.price ? `| order(price ${searchParams.price}` : ""
-  const dateOrder = searchParams.date ? `| order(_createdAt ${searchParams.date}` : ""
+  const { date="desc", price, color, category, size} = searchParams
+  const priceOrder = searchParams.price ? `| order(price ${searchParams.price})` : ""
+  const dateOrder = searchParams.date ? `| order(_createdAt ${searchParams.date})` : ""
   const order = `${priceOrder}${dateOrder}`
 
+  const productFilter = `_type == "product"`
+  const colorFilter = color ? `&& "${color}" in colors` : ""
+  const categoryFilter =category ? `&& "${category}" in categories` : ""
+  const sizeFilter =size ? `&& "${size}" in sizes` : ""
+  const filter = `*[${productFilter}${colorFilter}${categoryFilter}${sizeFilter}]`
+
   const products = await client.fetch<SanityProduct[]>(
-    groq`*[_type == "product"] ${order}{
+    groq`${filter} ${order}{
       _id,
       _createdAt,
       name,
