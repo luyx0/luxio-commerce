@@ -13,18 +13,18 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import {toast, useToast} from "@/components/ui/use-toast"
 import { CartItemsEmpty } from "@/components/cart-items-empty"
-import {removeItem} from "sanity/src/core/store/_legacy/authStore/storage";
 
 export function CartItems() {
-  const {cartDetails, setItemQuantity} = useShoppingCart()
+  const {cartDetails, removeItem, setItemQuantity} = useShoppingCart()
   const cartItems = Object.entries(cartDetails!).map(([_, product]) => product)
+  const {toast} = useToast()
 
   function removeCartItem(product: Product) {
     removeItem(product._id)
     toast({
       title: `${product.name} removed`,
       description: "Product removed from cart",
-      variant: "destructive"
+      variant: "destructive",
     })
   }
 
