@@ -7,8 +7,13 @@ import { formatCurrencyString, useShoppingCart } from "use-shopping-cart"
 import { Button } from "@/components/ui/button"
 
 export function CartSummary() {
-  const { formattedTotalPrice, totalPrice, cartDetails, cartCount, redirectToCheckout} =
-    useShoppingCart()
+  const {
+    formattedTotalPrice,
+    totalPrice,
+    cartDetails,
+    cartCount,
+    redirectToCheckout,
+  } = useShoppingCart()
   const [isLoading, setIsLoading] = useState(false)
   const isDisabled = isLoading || cartCount! === 0
   const shippingAmount = cartCount! > 0 ? 500 : 0
@@ -16,9 +21,9 @@ export function CartSummary() {
 
   async function onCheckout() {
     setIsLoading(true)
-    const response = await fetch('/api/checkout', {
+    const response = await fetch("/api/checkout", {
       method: "POST",
-      body: JSON.stringify(cartDetails)
+      body: JSON.stringify(cartDetails),
     })
     const data = await response.json()
     const result = await redirectToCheckout(data.id)
