@@ -1,4 +1,4 @@
 ## E-Commerce App
 
-- [Project Link](https://bit.ly/fs-ecommerce)
+- [Project Link](https://luxio-commerce-w2r6.vercel.app/)
 # luxio-commerce
