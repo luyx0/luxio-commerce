@@ -43,7 +43,7 @@ export function CartItems() {
               blurDataURL={`data:image/svg+xml;base64,${toBase64(
                 shimmer(200, 200)
               )}`}
-              src={"src"}
+              src={urlForImage(product.images[0]).url()}
               alt={"alt"}
               width={200}
               height={200}
